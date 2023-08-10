@@ -17,12 +17,11 @@ jobs:
     - name: Get all test, doc and src files that have changed
       id: changed-files-yaml
       uses: tj-actions/changed-files@v37
-    - name: Run step if test file(s) change
-      # NOTE: The key has to start with the same key used above e.g. `test_(...)` | `doc_(...)` | `src_(...)` when trying to access the `any_changed` output.
-      if: steps.changed-files-yaml.outputs.test_any_changed == 'true'  
+    - name: List all changed files
       run: |
-        echo "One or more test file(s) has changed."
-        echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.test_all_changed_files }}
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          echo "$file was changed"
+        done
 #     - name: Docker Setup QEMU
 #       # You may pin to the exact commit or the version.
 #       # uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7

@@ -1,5 +1,4 @@
 # Desinged By Kuromesi
-# For Lab Containers
 FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
 
 ENV TZ Asia/Shanghai

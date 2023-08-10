@@ -1,5 +1,5 @@
 # template of other dockerfiles
-ARG IMAGE_NAME=ubuntu:20.05
+ARG IMAGE_NAME=ubuntu:20.04
 
 FROM ${IMAGE_NAME}
 

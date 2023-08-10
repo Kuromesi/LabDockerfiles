@@ -41,8 +41,8 @@ jobs:
         for file in ${{ steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}; do
           dir=$(dirname $file)
           IMAGE=$(dirname $dir)
-          tag=$(basename $dir)
+          TAG=$(basename $dir)
           echo "building image $IMAGE"
-          docker build ${IMAGE} --file Dockerfile --tag kuromesi/${IMAGE}:latest
-          docker push kuromesi/${IMAGE}:latest
+          docker build ${IMAGE} --file Dockerfile --tag kuromesi/${IMAGE}:${TAG}
+          docker push kuromesi/${IMAGE}:${TAG}
         done

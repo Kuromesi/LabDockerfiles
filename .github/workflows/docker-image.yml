@@ -36,11 +36,11 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build the Docker image
+    - name: Build and push the Docker image
       run: |
         for file in ${{ steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}; do
           IMAGE=$(dirname $file)
           echo "building image $IMAGE"
-          docker build ${IMAGE} --file Dockerfile --tag ${IMAGE}:latest
-          docker push ${IMAGE}:latest
+          docker build ${IMAGE} --file Dockerfile --tag kuromesi/${IMAGE}:latest
+          docker push kuromesi/${IMAGE}:latest
         done

@@ -12,6 +12,5 @@ RUN apt update && apt install -y \
 			&& rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp* \
 			&& echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
             && mkdir /var/run/sshd		
-			
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]

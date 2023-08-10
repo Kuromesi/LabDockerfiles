@@ -1,7 +1,7 @@
 # Desinged By Kuromesi
 FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
-
-ENV TZ Asia/Shanghai
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ Asia/Shanghai 
 RUN echo 'root:root' |chpasswd
 RUN apt update && apt install -y \ 
 			openssh-server \

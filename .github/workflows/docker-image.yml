@@ -19,31 +19,28 @@ jobs:
       uses: tj-actions/changed-files@v37
       with:
         files_yaml: |
-          doc:
-            - '**/*.md'
-            - docs/**
-            - README.md
           dockerfile:
             - '**/Dockerfile'
-    - name: List all changed files
+    - name: Docker Setup QEMU
+      # You may pin to the exact commit or the version.
+      # uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7
+      uses: docker/setup-qemu-action@v2.2.0
+    - name: Docker Setup Buildx
+      # You may pin to the exact commit or the version.
+      # uses: docker/setup-buildx-action@4c0219f9ac95b02789c1075625400b2acbff50b1
+      uses: docker/setup-buildx-action@v2.9.1
+    - name: Docker Login
+      # You may pin to the exact commit or the version.
+      # uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc
+      uses: docker/login-action@v2.2.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build the Docker image
       run: |
         for file in ${{ steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}; do
-          echo "$file was changed"
+          IMAGE=$(dirname $file)
+          echo "building image $IMAGE"
+          docker build ${IMAGE} --file Dockerfile --tag ${IMAGE}:latest
+          docker push ${IMAGE}:latest
         done
-#     - name: Docker Setup QEMU
-#       # You may pin to the exact commit or the version.
-#       # uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7
-#       uses: docker/setup-qemu-action@v2.2.0
-#     - name: Docker Setup Buildx
-#       # You may pin to the exact commit or the version.
-#       # uses: docker/setup-buildx-action@4c0219f9ac95b02789c1075625400b2acbff50b1
-#       uses: docker/setup-buildx-action@v2.9.1
-#     - name: Docker Login
-#       # You may pin to the exact commit or the version.
-#       # uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc
-#       uses: docker/login-action@v2.2.0
-#       with:
-#         username: ${{ secrets.DOCKERHUB_USERNAME }}
-#         password: ${{ secrets.DOCKERHUB_TOKEN }}
-#     - name: Build the Docker image
-#       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

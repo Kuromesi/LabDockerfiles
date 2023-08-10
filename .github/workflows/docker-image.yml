@@ -17,6 +17,14 @@ jobs:
     - name: Get all test, doc and src files that have changed
       id: changed-files-yaml
       uses: tj-actions/changed-files@v37
+      with:
+        files_yaml: |
+          doc:
+            - '**/*.md'
+            - docs/**
+            - README.md
+          dockerfile:
+            - '**/Dockerfile'
     - name: List all changed files
       run: |
         for file in ${{ steps.changed-files-yaml.outputs.all_changed_files }}; do

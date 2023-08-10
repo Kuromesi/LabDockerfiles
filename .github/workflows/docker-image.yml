@@ -24,7 +24,7 @@ jobs:
       if: steps.changed-files-yaml.outputs.test_any_changed == 'true'  
       run: |
         echo "One or more test file(s) has changed."
-        echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.test_all_changed_files }
+        echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.test_all_changed_files }}
 #     - name: Docker Setup QEMU
 #       # You may pin to the exact commit or the version.
 #       # uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7

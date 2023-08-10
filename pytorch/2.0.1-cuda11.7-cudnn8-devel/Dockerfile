@@ -1,5 +1,5 @@
 # template of other dockerfiles
-ARG IMAGE_NAME=ubuntu:20.04
+ARG IMAGE_NAME=pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel
 
 FROM ${IMAGE_NAME}
 

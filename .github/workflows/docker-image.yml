@@ -39,7 +39,9 @@ jobs:
     - name: Build and push the Docker image
       run: |
         for file in ${{ steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}; do
-          IMAGE=$(dirname $file)
+          dir=$(dirname $file)
+          IMAGE=$(dirname $dir)
+          tag=$(basename $dir)
           echo "building image $IMAGE"
           docker build ${IMAGE} --file Dockerfile --tag kuromesi/${IMAGE}:latest
           docker push kuromesi/${IMAGE}:latest

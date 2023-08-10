@@ -19,7 +19,7 @@ jobs:
       uses: tj-actions/changed-files@v37
     - name: List all changed files
       run: |
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+        for file in ${{ steps.changed-files-yaml.outputs.all_changed_files }}; do
           echo "$file was changed"
         done
 #     - name: Docker Setup QEMU

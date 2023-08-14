@@ -8,6 +8,9 @@ on:
 jobs:
   diff:
     runs-on: ubuntu-latest
+    outputs:
+      dockerfile_any_changed: ${{ steps.changed-files-yaml.outputs.dockerfile_any_changed }}
+      dockerfile_all_changed_files: ${{ steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}
     steps: 
     - uses: actions/checkout@v3
       with:
@@ -20,8 +23,9 @@ jobs:
           dockerfile:
             - '**/Dockerfile'
   build:
+    needs: diff
     runs-on: ubuntu-latest
-    if: needs.jobs.diff.steps.changed-files-yaml.outputs.dockerfile_any_changed == 'true'
+    if: needs.diff.outputs.dockerfile_any_changed == 'true'
     steps:
     - uses: actions/checkout@v3
       with:
@@ -37,7 +41,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push the Docker image
       run: |
-        for file in ${{ needs.jobs.diff.steps.changed-files-yaml.outputs.dockerfile_all_changed_files }}; do
+        for file in ${{ needs.diff.outputs.dockerfile_all_changed_files  }}; do
           dir=$(dirname $file)
           IMAGE=$(dirname $dir)
           TAG=$(basename $dir)

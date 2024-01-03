@@ -46,6 +46,6 @@ jobs:
           IMAGE=$(dirname $dir)
           TAG=$(basename $dir)
           echo "building image $IMAGE"
-          docker build ${IMAGE} --file ${file} --tag kuromesi/${IMAGE}:${TAG}
+          docker build ${dir} --file ${file} --tag kuromesi/${IMAGE}:${TAG}
           docker push kuromesi/${IMAGE}:${TAG}
         done

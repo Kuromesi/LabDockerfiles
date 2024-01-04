@@ -1,0 +1,20 @@
+FROM ubuntu:focal
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y python3-pip default-libmysqlclient-dev vim curl gnupg && \
+    pip install mysql
+
+RUN curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list && \
+    apt update
+RUN apt install -y wazuh-manager wazuh-indexer
+RUN apt install -y mysql-server
+RUN apt install -y openssh-server
+COPY wazuh /wazuh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+EXPOSE 55000/tcp 1514/tcp 1515/tcp 514/udp 1516/tcp 3306/tcp 22/tcp
+
+ENTRYPOINT [ "/entrypoint.sh" ]

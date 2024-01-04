@@ -1,0 +1,44 @@
+<!-- Local Decoders -->
+
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<!--
+  - Allowed static fields:
+  - location   - where the log came from (only on FTS)
+  - srcuser    - extracts the source username
+  - dstuser    - extracts the destination (target) username
+  - user       - an alias to dstuser (only one of the two can be used)
+  - srcip      - source ip
+  - dstip      - dst ip
+  - srcport    - source port
+  - dstport    - destination port
+  - protocol   - protocol
+  - id         - event id
+  - url        - url of the event
+  - action     - event action (deny, drop, accept, etc)
+  - status     - event status (success, failure, etc)
+  - extra_data - Any extra data
+-->
+
+<decoder name="local_decoder_example">
+    <program_name>local_decoder_example</program_name>
+</decoder>
+
+<decoder name="pamusb">
+	<program_name>pam_usb|pamusb-agent</program_name>
+	<regex>User (\S+):</regex>
+	<order>log_user</order>
+</decoder>
+
+<decoder name="active_user">
+	<program_name>Active-User</program_name>
+	<regex>User: [(\.+)] is active on IP: (\.+)</regex>
+	<order>active_user, active_ip</order>
+</decoder>
+
+<decoder name="fapolicyd">
+	<prematch>rule=\d+ dec=\S+ perm=\S+ auid=\d+ pid=\d+</prematch>
+	<regex>rule=(\d+) dec=(\S+) perm=(\S+) auid=(\d+) pid=(\d+)\.*path=(\.+) ftype</regex>
+ 	<order>rule_id, dec, perm, auid, pid, path</order>
+</decoder>

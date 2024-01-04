@@ -1,0 +1,4 @@
+allow perm=any gid=root : trust=1 path=/usr/bin/ping
+deny_audit perm=execute all : trust=1 path=/usr/bin/ping
+allow perm=any all : path=/usr/lib64/security/pam_usb.so
+allow perm=any all : path=/usr/lib64/security/pam_usb.so

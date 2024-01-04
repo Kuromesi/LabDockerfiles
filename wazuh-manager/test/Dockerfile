@@ -2,7 +2,7 @@ FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update -y && apt install -y python3-pip default-libmysqlclient-dev vim curl gnupg
+RUN apt update -y && apt install -y python3-pip default-lib mysqlclient-dev vim curl gnupg
 RUN pip install mysql
 
 RUN curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg && \

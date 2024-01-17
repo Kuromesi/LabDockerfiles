@@ -1,0 +1,1 @@
+{"nodes": [{"node_id": "123", "name": "123", "description": "", "type": "", "color": "#ff0000", "linked_graph": "test", "is_entry": true, "title": "123", "label": "123", "id": "275d1d87-fa82-46dd-9778-b030de1fda47", "beta": "1", "sigma": "1", "hetero": "1"}], "edges": [{"id": "e89ef2e8-1706-4230-bfe0-1e065203f8fb"}]}
